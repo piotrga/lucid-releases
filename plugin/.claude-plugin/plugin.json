@@ -1,7 +1,7 @@
 {
   "name": "lucid-language",
   "version": "0.2.0",
-  "description": "Maintain project requirements in Lucid and derive tests from agreed behaviour.",
+  "description": "Load Lucid project guidance at session start and derive tests from agreed requirements.",
   "author": {
     "name": "Lucid Language"
   }

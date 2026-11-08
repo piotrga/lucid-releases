@@ -30,8 +30,9 @@ jobs:
           "$cli" plugin validate plugin
           git init -q "$RUNNER_TEMP/lucid-project"
           cd "$RUNNER_TEMP/lucid-project"
-          "$cli" plugin install lucid-language --marketplace "$GITHUB_REPOSITORY#$GITHUB_SHA" --scope project
-          "$cli" plugin list --json | jq -e 'any(.[]; .id == "lucid-language@lucid-releases" and .enabled == true and .scope == "project")'
+          "$cli" plugin install lucid-language --marketplace "$GITHUB_REPOSITORY" --scope project
+          installed=$("$cli" plugin list --json | jq -er '.[] | select(.id == "lucid-language@lucid-releases" and .enabled and .scope == "project") | .installPath')
+          diff -r "$GITHUB_WORKSPACE/plugin" "$installed"
       - name: Publish and verify public download
         env:
           GH_TOKEN: ${{ github.token }}
