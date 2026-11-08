@@ -335,3 +335,17 @@ failure even if other dimensions improve. Also assess human-readable explanation
 appropriate questions, artifact traceability, and safe cleanup. Token use and
 latency are secondary measures. Tests on a different model, or without tools,
 cannot establish adherence in the intended Claude workflow.
+
+## Existing spec outside the conventional folder
+
+A project points at `contracts/booking.lucid` and records decisions beside it.
+Ask to change only the cancellation rule in the specification. The edit belongs
+in that contract. Preserve the actual test command and decision history. Record
+affected tests or code as pending. A second booking spec or an application
+code change is a failure.
+
+## Review before adoption
+
+In a project with no Lucid specification, ask whether two proposed rules
+contradict each other. Show the distinguishing case. This read-only review
+creates no project instructions, specification, tests or application code.

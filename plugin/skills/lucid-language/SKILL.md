@@ -1,6 +1,6 @@
 ---
 name: lucid-language
-description: Maintain .lucid specifications and derive tests and implementation from agreed behaviour. Use when adopting Lucid in a project, changing what its users experience, reviewing requirements or explaining a mismatch, even if the request does not mention the spec.
+description: Write, review and maintain .lucid specifications. Use for requirements, decisions, readiness and discrepancies in Lucid projects, including behaviour changes described in application terms.
 ---
 
 # Working with a Lucid project
@@ -25,7 +25,7 @@ semantics, required slots and legacy forms.
 | Explain a difference between intent, spec, code and observed results | [Diagnostics](diagnostics.md) |
 | See worked examples with decisions and counterexamples | [Examples](examples.md) |
 
-Read the affected constructs, their assumptions and prior decisions before acting.
+Read the references needed for this task, the affected constructs, their assumptions and prior decisions before acting. After a context reset, reload them before describing their rules.
 On the first authorised change, follow the project onboarding in [workflow.md](workflow.md).
 During a review, report findings with the smallest case that distinguishes the outcomes.
 When editing, follow affected consumers and preserve meaning, rationale, boundaries
@@ -35,13 +35,18 @@ and traceability. Keep a larger redesign as a separate proposal.
 
 Read the project's instructions, relevant specs and durable decisions before
 answering questions about its behaviour. Re-read them in a fresh session or
-after losing context. Follow the project's layout. If this is its first
-authorised behaviour change, create the smallest useful spec under
-`spec/<domain>.lucid`. Record material unresolved choices and their basis in
+after losing context. Locate the authoritative spec using the project's instructions and existing
+layout. Update the rule where it already lives. When no existing construct
+owns the agreed behaviour, add it in the appropriate domain. Use
+`spec/<domain>.lucid` as the default for a new Lucid project. Record material unresolved choices and their basis in
 the existing decision record, or `spec/decisions.md` when one is needed.
-Keep an existing change log current. A review or explanation stays read-only.
+Record material accepted changes in the project change log as described in [workflow.md](workflow.md). A review or explanation stays read-only.
 
 ## Change behaviour
+
+A spec-only request ends after the requirements, decisions and affected references
+are reconciled. Record downstream tests or implementation as pending where needed.
+Follow the full sequence below when implementation is also requested.
 
 1. **Spec first.** Locate the rule and its dependants. Record the agreed
    outcome, scope, exceptions and rationale. Distinguish the user's decisions

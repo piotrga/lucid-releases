@@ -20,7 +20,7 @@ Contract for semantic guarantees, and Gherkin for useful behavioral examples.
 Use only forms that add precision. Preserve public identifiers and a single
 authoritative source for each rule; precision takes priority over notation.
 
-Every change follows this order:
+For spec-only work, update the contract and record downstream impact. When implementation is also requested, follow this order:
 
 1. **Spec first.** Read the wider relevant spec and prior decisions. Record the
    intended behavior, consequences, rationale, and adopted design choices before

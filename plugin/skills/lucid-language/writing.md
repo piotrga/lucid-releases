@@ -56,12 +56,6 @@ dictionary or claim formal ASD-STE100 compliance. This is a practical use of its
 writing principles, as described by the
 [ASD maintenance group](https://www.asd-ste100.org/STE_faq.html).
 
-For code, use domain-aligned names, clear control flow, and explicit side effects.
-Use comments/docstrings to explain contracts and reasons that the code does not
-make clear. Keep target-language idioms, public names, and API compatibility.
-Do not turn code into English sentences or introduce redundant comments to meet
-a prose template. Apply the principles to error messages and test names as well.
-
 ## Presenting a specification
 
 Start with the outcome, then link to rules and evidence. Keep each rule's

@@ -138,7 +138,7 @@ Apply authorized changes across affected definitions and consumers coherently.
 Check their combined effect and preserve meaningful examples. Resolve a decision
 when dependent requirements are updated, or clearly record pending work.
 
-Append a `spec/changes.log` entry for each material accepted change, with date,
+Append to the existing project change log (default `spec/changes.log`) for each material accepted change, with date,
 context, changed behavior, reason, and source. Append at the end; newest-first
 ordering belongs in a view. Preserve prior entries. For an existing reverse-
 chronological log, record the append convention once without reordering history.

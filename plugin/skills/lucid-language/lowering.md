@@ -1,16 +1,8 @@
 # Implementing Lucid requirements
 
-Contents: Establish what is ready · Python conventions · Scala and other
-targets · Verify behavior
-
-Use only when implementation or translation is requested. Read the relevant
-spec and [language.md](language.md). Honor the project's language, architecture,
-and conventions. Prefer explicit types and a pure domain core where compatible;
-do not switch stacks to satisfy a generic preference.
-
-Apply [writing.md](writing.md) to names, comments, docstrings, and error messages.
-Use clear domain terms and control flow. Preserve public API compatibility and
-target-language idioms; avoid comments that merely repeat the code.
+Use this reference to check whether a settled rule can be implemented and
+verified. In a spec-only task, record consumers and missing decisions. Make
+implementation changes only when the user has requested them.
 
 ## Establish what is ready
 
@@ -35,57 +27,15 @@ details consistent with product constraints and record their rationale and
 status. Describe current code as observed until conformance is checked; do not
 silently turn an implementation discrepancy into the required behavior.
 
-## Python conventions
+## Mapping a rule to its enforcement
 
-Default mappings for new Python code; adapt to established project conventions
-while preserving requirements:
-
-| Lucid | Python mapping |
-|---|---|
-| Entity | Annotated immutable value, normally `@dataclass(frozen=True)` |
-| Collection in immutable state | `tuple[T, ...]` or an appropriate immutable collection |
-| Optional field | `T | None`, preserving default and missing/empty semantics |
-| Local constraint or forbidden state | Construction/domain-boundary validation plus behavior checks |
-| Population-wide uniqueness | Enforcement at the owning collection/store boundary |
-| Transition or cross-role invariant | Enforcement at the relevant coordination boundary; interaction/trace tests |
-| `ordered by a then b` | Comparison of specified keys only |
-| Pure `intent` | Fully annotated pure function |
-| Effectful `flow` | Driver/service operation, commonly `async def` in an async project |
-| Role handler | Pure function/method returning `(next_state, outgoing_effects)` |
-| State change in `effect:` | New immutable state, often `dataclasses.replace` |
-| Reply/send | Typed effect values with explicit target and payload |
-| Named failure | Explicit result matching the domain outcome |
-| `alongside` | Concurrency primitive matching agreed failure/cancellation semantics |
-| Collection predicates | `all`, `any`, or counts over the defined population |
-| Sets and relations | Validated typed data in its appropriate authoritative source |
-| Definitions and rationale | Names, documentation, and relevant behavioral checks |
-
-Frozen dataclasses do not recursively freeze
-members: mutable dictionaries/lists need an immutable representation or suitable
-encapsulation. Choose clear function boundaries rather than a line-count target.
-
-Handlers perform no I/O or mutation. They return new state and effects for the
-driver. Implement the specified failure-state behavior; if a material state or
-effect outcome is absent, resolve it rather than assuming rejection is atomic
-or leaves everything unchanged.
-Invalid-value guards may raise validation errors; named protocol failures remain
-explicit outcomes. Preserve rationale in useful documentation, not only test names.
-
-`asyncio.gather` is not a universal lowering for parallel branches: inspect
-failure, cancellation, ordering, and partial effects. Likewise, configure or
-implement comparison so incidental dataclass fields do not become tie-breakers.
-
-## Scala and other targets
-
-For Scala, entities normally become immutable case classes; intents become
-pure functions; handlers return new state and typed effect collections. Use
-the project's ZIO, Cats Effect, or other stack for flows. Parallel composition
-must preserve declared failure/cancellation behavior.
-
-In every target, preserve valid states, outcomes, temporal guarantees, and
-explicit assumptions. Shared code can use algebraic structures whose instances
-satisfy the laws established by [generalization.md](generalization.md), while
-retaining domain type boundaries and local policies.
+Identify the boundary that can uphold each guarantee. Value constraints may
+hold at construction. Uniqueness across purchases requires coordination where
+the buyers share stock. For a transition, preserve the specified pre-state,
+result, next state and observable effects, including failure and retry paths.
+For parallel branches, record the agreed ordering, cancellation and partial
+outcomes. Leave the choice of language, libraries and local representation
+to the project unless an adopted design decision constrains them.
 
 ## Verify behavior
 

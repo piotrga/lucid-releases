@@ -43,6 +43,7 @@ introduces no approval gate.
 ## Release
 
 Review the public diff for personal details, private URLs, paths and credentials.
+When preparing a release from the full Lucid project, run its spec export check against this checkout. Review the resulting diff and run the check again after applying it.
 Set the next version in `plugin/.claude-plugin/plugin.json`. Run
 `python3 tools/build.py` and commit the manifest and plugin changes together
 on `main`. GitHub Actions checks installation from the published repository,

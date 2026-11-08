@@ -11,8 +11,12 @@ release() { gh release "$@" --repo "$repo"; }
 tag_sha=$(git ls-remote "https://github.com/${repo}.git" "refs/tags/$tag" | cut -f1)
 [[ -z "$tag_sha" || "$tag_sha" == "$commit" ]] || { echo "Version already used" >&2; exit 1; }
 if ! release view "$tag" >/dev/null 2>&1; then
+  summary="Lucid Language for Claude Code."
+  if [[ -f "release-notes/$tag.md" ]]; then summary=$(<"release-notes/$tag.md"); fi
   release create "$tag" --target "$commit" --draft --title "Lucid Language $tag" \
-    --notes "Install from the project directory, then start a fresh Claude Code session.
+    --notes "$summary
+
+Install from the project directory, then start a fresh Claude Code session.
 
 \`\`\`sh
 claude plugin install lucid-language --marketplace $repo --scope project
