@@ -1,0 +1,14 @@
+{
+  "name": "lucid-releases",
+  "owner": {
+    "name": "Lucid Language"
+  },
+  "plugins": [
+    {
+      "name": "lucid-language",
+      "source": "./plugin",
+      "description": "Maintain project requirements in Lucid and derive tests from agreed behaviour."
+    }
+  ],
+  "description": "Claude Code plugins for working with Lucid specifications."
+}

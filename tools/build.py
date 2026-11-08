@@ -1,15 +1,18 @@
-"""Validate and package the project's three public Markdown files."""
+"""Validate and package the installable plugin."""
 
 from hashlib import sha256
+import json
 from pathlib import Path
 import re
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = (
-    ".claude/rules/lucid-language.md",
-    ".claude/skills/lucid-language/SKILL.md",
-    ".claude/skills/lucid-language/language.md",
+    ".claude-plugin/plugin.json",
+    "hooks/hooks.json",
+    "project.md",
+    "skills/lucid-language/SKILL.md",
+    "skills/lucid-language/language.md",
 )
 PRIVATE = re.compile(
     r"(?i)(?:[\w.+-]+@[\w.-]+\.[a-z]{2,}|https?://|/Users/|/home/|"
@@ -28,10 +31,11 @@ def validate(path: Path) -> bytes:
 
 
 def build() -> None:
-    version = (ROOT / "VERSION").read_text().strip()
+    plugin = ROOT / "plugin"
+    version = json.loads((plugin / ".claude-plugin/plugin.json").read_bytes())["version"]
     if not re.fullmatch(r"(?:0|[1-9][0-9]*)(?:\.(?:0|[1-9][0-9]*)){2}", version):
-        raise ValueError("VERSION must contain a numeric major.minor.patch version")
-    sources = {name: validate(ROOT / name) for name in FILES}
+        raise ValueError("Plugin version must contain a numeric major.minor.patch version")
+    sources = {name: validate(plugin / name) for name in FILES}
     dist = ROOT / "dist"
     dist.mkdir(exist_ok=True)
     output = dist / "lucid-language.zip"

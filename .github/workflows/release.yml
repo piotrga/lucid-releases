@@ -2,7 +2,7 @@ name: Release Lucid Language
 on:
   push:
     branches: [main]
-    paths: [VERSION]
+    paths: ['plugin/.claude-plugin/plugin.json']
   workflow_dispatch:
 
 permissions:
@@ -21,6 +21,17 @@ jobs:
         with:
           persist-credentials: false
       - run: python3 tools/build.py
+      - name: Test a fresh project install from this GitHub commit
+        run: |
+          npm install --prefix "$RUNNER_TEMP/lucid-cli" --no-audit --no-fund @anthropic-ai/claude-code@2.1.319
+          export CLAUDE_CONFIG_DIR="$RUNNER_TEMP/lucid-config"
+          cli="$RUNNER_TEMP/lucid-cli/node_modules/.bin/claude"
+          "$cli" plugin validate .
+          "$cli" plugin validate plugin
+          git init -q "$RUNNER_TEMP/lucid-project"
+          cd "$RUNNER_TEMP/lucid-project"
+          "$cli" plugin install lucid-language --marketplace "$GITHUB_REPOSITORY#$GITHUB_SHA" --scope project
+          "$cli" plugin list --json | jq -e 'any(.[]; .id == "lucid-language@lucid-releases" and .enabled == true and .scope == "project")'
       - name: Publish and verify public download
         env:
           GH_TOKEN: ${{ github.token }}

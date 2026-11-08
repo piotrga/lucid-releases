@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-tag="v$(cat VERSION)"
+tag="v$(jq -r .version plugin/.claude-plugin/plugin.json)"
 repo=${GITHUB_REPOSITORY:?}
 commit=${GITHUB_SHA:?}
 assets=(dist/lucid-language.zip dist/SHA256SUMS)
@@ -12,7 +12,11 @@ tag_sha=$(git ls-remote "https://github.com/${repo}.git" "refs/tags/$tag" | cut 
 [[ -z "$tag_sha" || "$tag_sha" == "$commit" ]] || { echo "Version already used" >&2; exit 1; }
 if ! release view "$tag" >/dev/null 2>&1; then
   release create "$tag" --target "$commit" --draft --title "Lucid Language $tag" \
-    --notes 'Download lucid-language.zip and extract it in the project root. Start a fresh Claude Code session. SHA256SUMS contains the archive digest.'
+    --notes "Install from the project directory, then start a fresh Claude Code session.
+
+\`\`\`sh
+claude plugin install lucid-language --marketplace $repo --scope project
+\`\`\`"
 fi
 if [[ $(release view "$tag" --json isDraft --jq .isDraft) == true ]]; then
   target=$(release view "$tag" --json targetCommitish --jq .targetCommitish)

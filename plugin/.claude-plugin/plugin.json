@@ -1,0 +1,8 @@
+{
+  "name": "lucid-language",
+  "version": "0.2.0",
+  "description": "Maintain project requirements in Lucid and derive tests from agreed behaviour.",
+  "author": {
+    "name": "Lucid Language"
+  }
+}
