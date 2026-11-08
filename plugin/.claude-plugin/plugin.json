@@ -1,5 +1,6 @@
 {
   "name": "lucid-language",
+  "displayName": "Lucid Language",
   "version": "0.2.0",
   "description": "Load Lucid project guidance at session start and derive tests from agreed requirements.",
   "author": {

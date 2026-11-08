@@ -32,7 +32,7 @@ jobs:
           cd "$RUNNER_TEMP/lucid-project"
           "$cli" plugin install lucid-language --marketplace "$GITHUB_REPOSITORY" --scope project
           installed=$("$cli" plugin list --json | jq -er '.[] | select(.id == "lucid-language@lucid-releases" and .enabled and .scope == "project") | .installPath')
-          diff -r "$GITHUB_WORKSPACE/plugin" "$installed"
+          diff -r --exclude=.in_use "$GITHUB_WORKSPACE/plugin" "$installed"
       - name: Publish and verify public download
         env:
           GH_TOKEN: ${{ github.token }}
