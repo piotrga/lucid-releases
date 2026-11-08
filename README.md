@@ -22,6 +22,24 @@ If you previously unpacked v0.1.0, remove its three installed files after
 checking for local edits: `.claude/rules/lucid-language.md` and the two Markdown
 files under `.claude/skills/lucid-language/`. Keep your project specifications.
 
+## Work on specifications
+
+| Project task | What the plugin helps you do |
+| --- | --- |
+| Capture a requirement | Turn examples into definitions, conditions, exceptions and rationale. Record open product choices separately. |
+| Review a change | Check contradictions, missing outcomes, duplicated rules and unsafe generalisations. Follow the impact across files. |
+| Derive an artefact | Generate traceable test expectations, diagrams, architecture or API views and implementation mappings. |
+| Explain a discrepancy | Compare the agreed intent, written spec, implementation and observed behaviour. |
+| Resume or delegate work | Hooks supply the project contract and list conventional spec files on new requests, after compaction and to ordinary workers. |
+
+Read the [skill guide](plugin/skills/lucid-language/SKILL.md) for the full
+reference index. The [evaluation cases](checks/spec-cases.md) describe expected
+behaviour. They are examples for evaluating a model on project tasks.
+
+The hooks supply context to Claude. The project retains its own test commands
+and implementation workflow. The plugin writes no session intent record and
+introduces no approval gate.
+
 ## Release
 
 Review the public diff for personal details, private URLs, paths and credentials.
